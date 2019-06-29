@@ -1,0 +1,44 @@
+syntax = "proto3";
+package dataflow;
+
+message GraphDef {
+  repeated NodeDef node_def = 1;
+}
+
+message NodeDef{
+  string name = 1;
+  string type = 2;
+  uint32 in_num = 99;
+  repeated string in = 3;
+  repeated string out = 4;
+  oneof opDef {
+    LoaderOpProto loader_proto = 5;
+    InnerProductWeight weight = 9;
+    SoftMaxOpProto softmax_proto = 11;
+    LogLossOpProto logloss_proto = 12;
+  }
+}
+
+message LoaderOpProto {
+  string data = 1;
+  string label = 2;
+  uint32 channel = 3;
+  uint32 height = 4;
+  uint32 width = 5;
+}
+
+message InnerProductWeight {
+  string name = 1;
+  uint32 row_num = 2;
+  uint32 col_num = 3;
+}
+
+message SoftMaxOpProto {
+  uint32 tmp = 1;
+}
+
+message LogLossOpProto {
+  string data = 1;
+  string label = 2;
+  string loss = 3;
+}

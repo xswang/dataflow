@@ -1,0 +1,55 @@
+node_def{
+  name: "mnist"
+  type: "Loader"
+  loader_proto {
+    data: "data"
+    label: "label"
+  }
+}
+node_def{
+  name: "conv1"
+  type: "Convolution"
+  in: "mnist/data"
+  out: "out"
+  convolution_proto {
+    kernel_size: 1
+  }
+}
+node_def{
+  name: "pool1"
+  type: "Pooling"
+  in: "mnist/data"
+  out: "out"
+  pooling_proto {
+    kernel_size: 1
+  }
+}
+node_def{
+  name: "ip1"
+  type: "Innerproduct"
+  in: "conv1/out"
+  in: "pool1/out"
+  out: "out"
+  innerproduct_proto {
+    num_output: 1
+  }
+}
+node_def{
+  name: "softmax"
+  type: "Softmax"
+  in: "ip1/out"
+  out: "out"
+  softmax_proto {
+  }
+}
+node_def{
+  name: "logloss"
+  type: "LogLoss"
+  in: "softmax/out"
+  out: "out"
+  logloss_proto {
+    data: "softmax/out"
+    label: "mnist/label"
+    loss: "loss"
+  }
+}

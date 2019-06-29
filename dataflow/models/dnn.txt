@@ -1,0 +1,49 @@
+node_def{
+  name: "mnist"
+  type: "Loader"
+  loader_proto {
+    data: "data"
+    label: "label"
+  }
+}
+node_def{
+  name: "fc1"
+  type: "Innerproduct"
+  in: "mnist/data"
+  out: "out"
+  weight {
+    name: "w1"
+    row_num: 100
+    col_num: 256
+  }
+}
+node_def{
+  name: "fc2"
+  type: "Innerproduct"
+  in: "fc1/out"
+  out: "out"
+  weight {
+    name: "w2"
+    row_num: 256
+    col_num: 128
+  }
+}
+node_def{
+  name: "softmax"
+  type: "Softmax"
+  in: "fc2/out"
+  out: "out"
+  softmax_proto {
+  }
+}
+node_def{
+  name: "logloss"
+  type: "LogLoss"
+  in: "softmax/out"
+  out: "out"
+  logloss_proto {
+    data: "softmax/out"
+    label: "mnist/label"
+    loss: "loss"
+  }
+}
