@@ -18,7 +18,7 @@ class Logloss : public Operator {
   ~Logloss() {}
   std::string get_op_name() {return "Logloss";}
   void initialize(Node* node) {
-    std::cout << "hi" << std::endl;
+    std::cout << "initialize " << node->name_ << std::endl;
   }
  private:
   Node* _node;

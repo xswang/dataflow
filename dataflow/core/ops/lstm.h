@@ -19,6 +19,10 @@ class Lstm : public Operator {
   ~Lstm() {}
   std::string get_op_name() { return "Lstm"; }
 
+  void initialize(Node* node) {
+    std::cout << "initialize " << node->name_ << std::endl;
+  }
+
 };
 }
 

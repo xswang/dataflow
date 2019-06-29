@@ -18,7 +18,7 @@ class Innerproduct : public Operator {
   ~Innerproduct() {}
   std::string get_op_name() {return "Innerproduct";}
   void initialize(Node* node) {
-    std::cout << "hi" << std::endl;
+    std::cout << "initialize " << node->name_ << std::endl;
   }
 
  private:

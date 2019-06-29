@@ -18,6 +18,9 @@ class Pooling : public Operator{
   ~Pooling() {};
 
   std::string get_op_name() {return "pooling";}
+  void initialize(Node* node) {
+    std::cout << "initialize " << node->name_ << std::endl;
+  }
 };
 
 }

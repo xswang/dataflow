@@ -19,7 +19,7 @@ class Sigmoid : public Operator {
   ~Sigmoid() {}
   std::string get_op_name() {return "Sigmoid";}
   void initialize(Node* node) {
-    std::cout << "hi" << std::endl;
+    std::cout << "initialize " << node->name_ << std::endl;
   }
  private:
   Node* _node;

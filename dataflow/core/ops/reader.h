@@ -18,7 +18,7 @@ class Reader : public Operator {
   ~Reader() {}
   std::string get_op_name() {return "Reader";}
   void initialize(Node* node) {
-    std::cout << "hi" << std::endl;
+    std::cout << "initialize " << node->name_ << std::endl;
   }
  
  private:

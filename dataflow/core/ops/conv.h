@@ -17,6 +17,10 @@ class Conv : public Operator {
   Conv() {}
   ~Conv() {}
   std::string get_op_name() {return "Conv";}
+
+  void initialize(Node* node) {
+    std::cout << "initialize " << node->name_ << std::endl;
+  }
 };
 
 }
