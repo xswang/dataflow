@@ -6,8 +6,6 @@
  */
 #include <iostream>
 #include <fstream>
-#include "core/ops/operator.h"
-#include "core/ops/conv.h"
 #include "core/proto/dataflow.pb.h"
 #include "core/graph/proto_parse.h"
 #include "core/graph/udf_graph.h"

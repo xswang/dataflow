@@ -7,7 +7,11 @@
 
 #ifndef OPERATOR_H
 #define OPERATOR_H
-#include "core/base/class_register.h"
+
+// #include "core/base/class_register.h"
+#include "core/base/op_register.h"
+#include "core/ops/blob_matrix.h"
+#include "core/graph/graph.h"
 
 namespace dataflow{
 class Operator{
@@ -15,6 +19,12 @@ class Operator{
   Operator() {}
   virtual ~Operator() = default;
   virtual std::string get_op_name() {}
+  virtual void initialize(Node* node) {}
+  virtual void finalize() {}
+  virtual void forward() {}
+  virtual void backward() {}
+ private:
+  Node* _node;
 };
 
 CLASS_REGISTER_DEFINE_REGISTRY(dataflow_op_registry, Operator)

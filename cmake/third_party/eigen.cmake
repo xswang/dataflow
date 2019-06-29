@@ -3,7 +3,9 @@ include (ExternalProject)
 set(EIGEN_INCLUDE_DIR ${THIRD_PARTY_DIR}/eigen/include)
 
 set(eigen_URL https://github.com/eigenteam/eigen-git-mirror.git)
-set(eigen_TAG 11a3c93ee327dd2be34bc56bc04a5ebcb3340256)
+# set(eigen_URL https://github.com/artsy/eigen.git)
+# set(eigen_TAG 11a3c93ee327dd2be34bc56bc04a5ebcb3340256)
+set(eigen_TAG acb5144eea3f4986c5bf855d33a937864da62737)
 set(eigen_HEADERS_DIR ${CMAKE_CURRENT_BINARY_DIR}/eigen/src/eigen/Eigen)
 
 ExternalProject_Add(eigen

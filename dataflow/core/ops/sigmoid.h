@@ -8,6 +8,7 @@
 #ifndef SIGMOID_H
 #define SIGMOID_H
 #include <string>
+#include <memory>
 
 #include "core/ops/operator.h"
 
@@ -17,6 +18,13 @@ class Sigmoid : public Operator {
   Sigmoid() {}
   ~Sigmoid() {}
   std::string get_op_name() {return "Sigmoid";}
+  void initialize(Node* node) {
+    std::cout << "hi" << std::endl;
+  }
+ private:
+  Node* _node;
+  std::shared_ptr<BlobMatrix> _input;
+
 };
 
 }
