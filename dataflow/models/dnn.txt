@@ -1,6 +1,6 @@
 node_def{
   name: "mnist"
-  type: "Loader"
+  type: "Reader"
   loader_proto {
     data: "data"
     label: "label"
@@ -9,7 +9,7 @@ node_def{
 node_def{
   name: "fc1"
   type: "Innerproduct"
-  in: "mnist/data"
+  in: "mnist/data_Reader"
   out: "out"
   weight {
     name: "w1"
@@ -20,7 +20,7 @@ node_def{
 node_def{
   name: "fc2"
   type: "Innerproduct"
-  in: "fc1/out"
+  in: "fc1/out_Innerproduct"
   out: "out"
   weight {
     name: "w2"
@@ -29,20 +29,20 @@ node_def{
   }
 }
 node_def{
-  name: "softmax"
-  type: "Softmax"
-  in: "fc2/out"
+  name: "sigmoid"
+  type: "Sigmoid"
+  in: "fc2/out_Innerproduct"
   out: "out"
-  softmax_proto {
+  sigmoid_proto {
   }
 }
 node_def{
   name: "logloss"
-  type: "LogLoss"
-  in: "softmax/out"
+  type: "Logloss"
+  in: "sigmoid/out_Sigmoid"
   out: "out"
   logloss_proto {
-    data: "softmax/out"
+    data: "sigmoid/out"
     label: "mnist/label"
     loss: "loss"
   }

@@ -28,20 +28,23 @@ void UdfGraph::GraphBuilder() {
 }
 
 void UdfGraph::BuildNode(const NodeDef node_def) {
-  Node* node = AddNode(node_def.name());
+  Node* node = AddNode(node_def.name(), node_def.type());
   for(const std::string in : node_def.in()) {
     //std::cout<<"in = "<<in<<std::endl;
     std::size_t pos = in.find("/");
     //std::cout<<"pos = "<<pos<<std::endl;
     std::string input_name = in.substr(0, pos);
     // std::cout<<"input_name = "<<input_name<<std::endl;
+    pos = in.find("_");
+    std::string type = in.substr(pos+1);
+    // std::cout << " in_type = " << type << std::endl;
     Node* InNode = nullptr;
     std::unordered_map<std::string, Node*>::iterator iter;
     iter = name_to_node_.find(input_name);
     if(iter != name_to_node_.end()){
       InNode = iter->second;
     } else {
-      InNode = NewNode(input_name);
+      InNode = NewNode(input_name, type);
     }
     node->pre_nodes_.insert({InNode});
     InNode->post_nodes_.insert({node});
@@ -50,12 +53,12 @@ void UdfGraph::BuildNode(const NodeDef node_def) {
   }
 }
 
-Node* UdfGraph::AddNode(const std::string& name) {
-  Node* n = nullptr;
-  n =  NewNode(name);
-  nodes_.insert({n});
-  name_to_node_.insert({name, n});
-  return n;
+Node* UdfGraph::AddNode(const std::string& name, const std::string& type) {
+  Node* node = nullptr;
+  node =  NewNode(name, type);
+  nodes_.insert({node});
+  name_to_node_.insert({name, node});
+  return node;
 }
 
 Edge* UdfGraph::AddEdge(Node* src, Node* dst) {

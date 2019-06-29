@@ -14,7 +14,7 @@ message NodeDef{
   oneof opDef {
     LoaderOpProto loader_proto = 5;
     InnerProductWeight weight = 9;
-    SoftMaxOpProto softmax_proto = 11;
+    SigmoidOpProto sigmoid_proto = 11;
     LogLossOpProto logloss_proto = 12;
   }
 }
@@ -33,7 +33,7 @@ message InnerProductWeight {
   uint32 col_num = 3;
 }
 
-message SoftMaxOpProto {
+message SigmoidOpProto {
   uint32 tmp = 1;
 }
 

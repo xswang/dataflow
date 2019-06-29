@@ -21,7 +21,7 @@ class UdfGraph : public Graph {
 
   void GraphBuilder();
   void BuildNode(const NodeDef node_def);
-  Node* AddNode(const std::string& name);
+  Node* AddNode(const std::string& name, const std::string& type);
   Edge* AddEdge(Node* src, Node* dst);
 
  public:

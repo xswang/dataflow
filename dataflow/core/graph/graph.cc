@@ -9,9 +9,9 @@
 
 namespace dataflow {
 
-Node* Graph::NewNode(const std::string& name) {
+Node* Graph::NewNode(const std::string& name, const std::string& type) {
   int32_t node_id = NewId();
-  Node* node = new Node(node_id, name);
+  Node* node = new Node(node_id, name, type);
   return node;
 }
 

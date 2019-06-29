@@ -20,14 +20,17 @@ class Task {
   ~Task() {}
 
   inline void run() {
-    for(Node* n : graph_.nodes_) {
-      std::cout<<n->name_<<":"<<n->input_num_<<std::endl;
+    for(Node* node : graph_.nodes_) {
+      // std::cout<<node->name_<<"        input_num: "<<node->input_num_<<std::endl;
+      // std::cout << std::endl;
     }
 
     GraphIter<Graph> graph_iter(graph_);
     for(graph_iter.First(); !graph_iter.End(); graph_iter.Next()){
-      Node* n = graph_iter.current_;
-      std::cout<<"node name: "<<n->id_<<std::endl; 
+      Node* node = graph_iter.current_;
+      std::cout<<"node name: " << node->name_ << "\tnode type: " << node_type_ <<std::endl; 
+      auto op = dynamic_cast<dataflow::Operator*>(dataflow::CREATE_OP(node->type_));
+      std::cout << op->get_op_name() << std::endl;
     }
   }
 

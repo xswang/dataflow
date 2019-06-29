@@ -19,8 +19,8 @@ class Edge;
  
 class Node {
  public:
-  Node(int32_t id, const std::string& name) 
-    : name_(name), id_(id), input_num_(0) {}
+  Node(int32_t id, const std::string& name, const std::string type) 
+    : name_(name), type_(type), id_(id), input_num_(0) {}
   ~Node() {}
 
   std::set<Node*> pre_nodes_;
@@ -34,6 +34,7 @@ class Node {
 
  public:
   std::string name_;
+  std::string type_;
   int32_t id_;
 };
 
@@ -51,7 +52,7 @@ class Graph {
   Graph() : id_(0) {}
   ~Graph() {}
 
-  Node* NewNode(const std::string& name);
+  Node* NewNode(const std::string& name, const std::string& type);
   Edge* NewEdge(Node* src, Node* dst);
   inline int32_t NewId() {
     return id_++;

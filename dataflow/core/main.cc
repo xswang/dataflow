@@ -27,8 +27,8 @@ int main() {
   dataflow::PbParse* pb;
   bool res = pb->ReadProtoFromTextFile(FLAGS_model_file.c_str(), &graph_def);
   dataflow::UdfGraph udf_graph(graph_def);
-  std::cout<<"node num = "<<udf_graph.nodes_.size()<<std::endl;
-  std::cout<<"edge num = "<<udf_graph.edges_.size()<<std::endl;
+  // std::cout<<"node num = "<<udf_graph.nodes_.size()<<std::endl;
+  // std::cout<<"edge num = "<<udf_graph.edges_.size()<<std::endl;
   dataflow::Task<dataflow::UdfGraph> task(udf_graph);
   task.run();
   return 0;

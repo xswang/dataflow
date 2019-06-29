@@ -14,6 +14,7 @@ class Operator{
  public:
   Operator() {}
   virtual ~Operator() = default;
+  virtual std::string get_op_name() {}
 };
 
 CLASS_REGISTER_DEFINE_REGISTRY(dataflow_op_registry, Operator)
