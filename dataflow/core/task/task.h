@@ -28,7 +28,7 @@ class Task {
     GraphIter<Graph> graph_iter(graph_);
     for(graph_iter.First(); !graph_iter.End(); graph_iter.Next()){
       Node* node = graph_iter.current_;
-      std::cout<<"node name: " << node->name_ << "\tnode type: " << node_type_ <<std::endl; 
+      std::cout<<"node name: " << node->name_ << "\tnode type: " << node->type_ <<std::endl; 
       auto op = dynamic_cast<dataflow::Operator*>(dataflow::CREATE_OP(node->type_));
       std::cout << op->get_op_name() << std::endl;
     }
