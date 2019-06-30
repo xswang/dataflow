@@ -19,8 +19,8 @@ message NodeDef{
 }
 
 message ReaderWProto {
-  string data = 1;
-  string label = 2;
+  string data = 2;
+  string label = 3;
 }
 
 message InnerproductWProto {
