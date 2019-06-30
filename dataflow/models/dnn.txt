@@ -1,7 +1,7 @@
 node_def{
   name: "mnist"
   type: "Reader"
-  loader_proto {
+  Reader_proto {
     data: "data"
     label: "label"
   }
@@ -11,7 +11,7 @@ node_def{
   type: "Innerproduct"
   in: "mnist/data_Reader"
   out: "out"
-  weight {
+  Innerproduct_proto{
     name: "w1"
     row_num: 100
     col_num: 256
@@ -22,7 +22,7 @@ node_def{
   type: "Innerproduct"
   in: "fc1/out_Innerproduct"
   out: "out"
-  weight {
+  Innerproduct_proto {
     name: "w2"
     row_num: 256
     col_num: 128
@@ -33,7 +33,10 @@ node_def{
   type: "Sigmoid"
   in: "fc2/out_Innerproduct"
   out: "out"
-  sigmoid_proto {
+  Sigmoid_proto {
+    name: "sigmoid"
+    row_num: 128
+    col_num: 1
   }
 }
 node_def{
@@ -41,7 +44,7 @@ node_def{
   type: "Logloss"
   in: "sigmoid/out_Sigmoid"
   out: "out"
-  logloss_proto {
+  Logloss_proto {
     data: "sigmoid/out"
     label: "mnist/label"
     loss: "loss"

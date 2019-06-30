@@ -25,7 +25,6 @@ class Node {
 
   std::set<Node*> pre_nodes_;
   std::set<Node*> post_nodes_;
-  
   std::set<Edge*> input_edges_;
   std::set<Edge*> output_edges_;
 
@@ -36,6 +35,8 @@ class Node {
   std::string name_;
   std::string type_;
   int32_t id_;
+  std::vector<std::string> input_x_;
+  std::vector<std::string> input_w_;
 };
 
 class Edge {

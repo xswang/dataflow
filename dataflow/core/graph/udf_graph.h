@@ -10,6 +10,7 @@
 
 
 #include "core/graph/graph.h"
+#include <google/protobuf/text_format.h>
 #include "core/proto/dataflow.pb.h"
 
 namespace dataflow {
@@ -21,7 +22,7 @@ class UdfGraph : public Graph {
 
   void GraphBuilder();
   void BuildNode(const NodeDef node_def);
-  Node* AddNode(const std::string& name, const std::string& type);
+  Node* AddNode(const NodeDef node_def);
   Edge* AddEdge(Node* src, Node* dst);
 
  public:

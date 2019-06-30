@@ -19,16 +19,14 @@ UdfGraph::~UdfGraph() {}
 
 void UdfGraph::GraphBuilder() {
   for(const NodeDef ndef : graph_def_.node_def()){
-      // std::cout<<"name = "<<ndef.name()<<"\ttype = "<<ndef.type()<<std::endl;
       BuildNode(ndef);
-      // std::cout<<std::endl;
   }
   NodeDef def;
   def.set_name("SOURCE");
 }
 
 void UdfGraph::BuildNode(const NodeDef node_def) {
-  Node* node = AddNode(node_def.name(), node_def.type());
+  Node* node = AddNode(node_def);
   for(const std::string in : node_def.in()) {
     //std::cout<<"in = "<<in<<std::endl;
     std::size_t pos = in.find("/");
@@ -53,11 +51,23 @@ void UdfGraph::BuildNode(const NodeDef node_def) {
   }
 }
 
-Node* UdfGraph::AddNode(const std::string& name, const std::string& type) {
+// Node* UdfGraph::AddNode(const std::string& name, const std::string& type) {
+Node* UdfGraph::AddNode(const NodeDef node_def) {
   Node* node = nullptr;
-  node =  NewNode(name, type);
+  std::string node_name = node_def.name();
+  std::string node_type = node_def.type();
+  node = NewNode(node_name, node_type);
+  std::string key = node_type + "_proto";
+  std::cout << key << std::endl;
+  const google::protobuf::Descriptor *d = node_def.GetDescriptor();
+  const google::protobuf::Reflection *r = node_def.GetReflection();
+  const google::protobuf::FieldDescriptor *fd = d->FindFieldByName(key);
+  auto& m = r->GetMessage(node_def, fd);
+  // google::protobuf::TextFormat::PrintToString(m, value);
+  // PrintProtoToString(m, value);
+  // std::cout << "v = " << *value << std::endl;
   nodes_.insert({node});
-  name_to_node_.insert({name, node});
+  name_to_node_.insert({node_name, node});
   return node;
 }
 

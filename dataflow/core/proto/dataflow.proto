@@ -8,36 +8,34 @@ message GraphDef {
 message NodeDef{
   string name = 1;
   string type = 2;
-  uint32 in_num = 99;
   repeated string in = 3;
   repeated string out = 4;
   oneof opDef {
-    LoaderOpProto loader_proto = 5;
-    InnerProductWeight weight = 9;
-    SigmoidOpProto sigmoid_proto = 11;
-    LogLossOpProto logloss_proto = 12;
+    ReaderWProto Reader_proto = 5;
+    InnerproductWProto Innerproduct_proto = 9;
+    SigmoidWProto Sigmoid_proto = 11;
+    LogLossWProto Logloss_proto = 12;
   }
 }
 
-message LoaderOpProto {
+message ReaderWProto {
   string data = 1;
   string label = 2;
-  uint32 channel = 3;
-  uint32 height = 4;
-  uint32 width = 5;
 }
 
-message InnerProductWeight {
+message InnerproductWProto {
   string name = 1;
   uint32 row_num = 2;
   uint32 col_num = 3;
 }
 
-message SigmoidOpProto {
-  uint32 tmp = 1;
+message SigmoidWProto {
+  string name = 1;
+  uint32 row_num = 2;
+  uint32 col_num = 3;
 }
 
-message LogLossOpProto {
+message LogLossWProto {
   string data = 1;
   string label = 2;
   string loss = 3;
