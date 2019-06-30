@@ -10,6 +10,7 @@
 #include <string>
 
 #include "core/ops/operator.h"
+#include "core/ops/matrix_blob.h"
 
 namespace dataflow{
 class Reader : public Operator {

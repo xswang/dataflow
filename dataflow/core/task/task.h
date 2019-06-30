@@ -11,6 +11,7 @@
 #include "core/graph/graph.h"
 #include "core/graph/graph_iter.h"
 #include "core/ops/operator.h"
+#include "core/ops/matrix_blob.h"
 
 namespace dataflow {
 
@@ -24,10 +25,16 @@ class Task {
     GraphIter<Graph> graph_iter(graph_);
     for(graph_iter.First(); !graph_iter.End(); graph_iter.Next()){
       Node* node = graph_iter.current_;
-      // std::cout<<"node name: " << node->name_ << "\tnode type: " << node->type_ <<std::endl; 
-      // auto op = dynamic_cast<dataflow::Operator*>(dataflow::CREATE_OP(node->type_));
+      std::vector<std::string> inputs_x = node->input_x_;
+      for (int32_t i = 0; i < inputs_x.size(); ++i) {
+        // std::cout << inputs_x[i] << std::endl;
+        std::string input_name = inputs_x[i];
+        // auto matrix_blob =
+        //   dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(input_name));
+        // matrix_blob_register.insert({input_name, matrix_blob});
+      }
+      std::cout << std::endl;
       auto op = dynamic_cast<dataflow::Operator*>(dataflow::CREATE_OP(node));
-      // std::cout << op->get_op_name() << std::endl;
     }
   }
 

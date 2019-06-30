@@ -11,6 +11,7 @@
 #include <memory>
 
 #include "core/ops/operator.h"
+#include "core/ops/matrix_blob.h"
 
 namespace dataflow{
 class Sigmoid : public Operator {
@@ -23,8 +24,7 @@ class Sigmoid : public Operator {
   }
  private:
   Node* _node;
-  std::shared_ptr<BlobMatrix> _input;
-
+  std::shared_ptr<MatrixBlob> _input;
 };
 
 }

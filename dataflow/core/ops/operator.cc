@@ -14,14 +14,12 @@
 #include "core/ops/sigmoid.h"
 #include "core/ops/logloss.h"
 
-namespace dataflow{
-CLASS_REGISTER_IMPLEMENT_REGISTRY(dataflow_op_registry, Operator);
+namespace dataflow {
 REGISTER_OP("Reader", Reader);
 REGISTER_OP("Innerproduct", Innerproduct);
-REGISTER_OP("Conv", Conv);
-REGISTER_OP("Pooling", Pooling);
-REGISTER_OP("Lstm", Lstm);
+// REGISTER_OP("Conv", Conv);
+// REGISTER_OP("Pooling", Pooling);
+// REGISTER_OP("Lstm", Lstm);
 REGISTER_OP("Sigmoid", Sigmoid);
 REGISTER_OP("Logloss", Logloss);
 }
-
