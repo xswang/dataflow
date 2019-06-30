@@ -65,7 +65,18 @@ Node* UdfGraph::AddNode(const NodeDef node_def) {
   r->ListFields(node_def, &fields);
 
   for (int i = 0; i < fields.size(); ++i) {
-    std::cout << fields[i]->name() << std::endl;
+    // std::cout << fields[i]->name() << std::endl;
+    if (fields[i]->name() == "in") {
+      const google::protobuf::FieldDescriptor* pMessageField = d->FindFieldByName(fields[i]->name());
+      // auto repeated_ptr_field =
+        // r->GetRepeatedPtrField<dataflow::NodeDef>(node_def, pMessageField);
+      // std::cout << ins << std::endl;
+      std::cout << r->FieldSize(node_def, pMessageField) << std::endl;
+      // int size = pReflection->FieldSize(node_def, pMessageField);
+      auto input_name = r->GetRepeatedString(node_def, pMessageField, 0);
+      std::cout << input_name << std::endl;
+      // node->input_x_.push_back(input_name);
+    }
     if (fields[i]->name() == key) {
       auto& weight_proto = r->GetMessage(node_def, fields[i]);
       const google::protobuf::Descriptor *d = weight_proto.GetDescriptor();
@@ -73,12 +84,14 @@ Node* UdfGraph::AddNode(const NodeDef node_def) {
       std::vector<const google::protobuf::FieldDescriptor*> fields;
       r->ListFields(weight_proto, &fields);
       for (int j = 0; j < fields.size(); ++j) {
-        std::cout << "===" << fields[j]->name() << std::endl;
         if (fields[j]->name() == "name" || fields[j]->name() == "data" || fields[j]->name() == "label" || fields[j]->name() == "loss") {
-          std::cout << "====== value " << r->GetString(weight_proto, fields[j]) << std::endl;
-        } else {
-          std::cout << fields[j]->name() << std::endl;
-          std::cout << "===== value " << r->GetUInt32(weight_proto, fields[j]) << std::endl;
+          // std::cout << "====== value " << r->GetString(weight_proto, fields[j]) << std::endl;
+        } else if (fields[j]->name() == "row_num") {
+          int32_t row_num = r->GetUInt32(weight_proto, fields[j]);
+          node->w_row_num_ = row_num;
+        } else if (fields[j]->name() == "col_num") {
+          int32_t col_num = r->GetUInt32(weight_proto, fields[j]);
+          node->w_col_num_ = col_num;
         }
       }
     }
