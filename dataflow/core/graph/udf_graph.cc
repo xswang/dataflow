@@ -51,7 +51,6 @@ void UdfGraph::BuildNode(const NodeDef node_def) {
   }
 }
 
-// Node* UdfGraph::AddNode(const std::string& name, const std::string& type) {
 Node* UdfGraph::AddNode(const NodeDef node_def) {
   Node* node = nullptr;
   std::string node_name = node_def.name();
@@ -65,27 +64,32 @@ Node* UdfGraph::AddNode(const NodeDef node_def) {
   r->ListFields(node_def, &fields);
 
   for (int i = 0; i < fields.size(); ++i) {
-    // std::cout << fields[i]->name() << std::endl;
     if (fields[i]->name() == "in") {
       const google::protobuf::FieldDescriptor* pMessageField = d->FindFieldByName(fields[i]->name());
-      // auto repeated_ptr_field =
-        // r->GetRepeatedPtrField<dataflow::NodeDef>(node_def, pMessageField);
-      // std::cout << ins << std::endl;
-      std::cout << r->FieldSize(node_def, pMessageField) << std::endl;
-      // int size = pReflection->FieldSize(node_def, pMessageField);
-      auto input_name = r->GetRepeatedString(node_def, pMessageField, 0);
-      std::cout << input_name << std::endl;
-      // node->input_x_.push_back(input_name);
-    }
-    if (fields[i]->name() == key) {
-      auto& weight_proto = r->GetMessage(node_def, fields[i]);
-      const google::protobuf::Descriptor *d = weight_proto.GetDescriptor();
-      const google::protobuf::Reflection *r = weight_proto.GetReflection();
-      std::vector<const google::protobuf::FieldDescriptor*> fields;
+      int32_t fields_size = r->FieldSize(node_def, pMessageField);
+      for (int32_t j = 0; j < fields_size; ++j) {
+        auto input_name = r->GetRepeatedString(node_def, pMessageField, j);
+        std::cout << "input_name = " << input_name << std::endl;
+        node->input_x_.push_back(input_name);
+      }
+    } else if (fields[i]->name() == "out") {
+      const google::protobuf::FieldDescriptor* pMessageField = d->FindFieldByName(fields[i]->name());
+      int32_t fields_size = r->FieldSize(node_def, pMessageField);
+      for (int32_t j = 0; j < fields_size; ++j) {
+        auto output_name = r->GetRepeatedString(node_def, pMessageField, j);
+        output_name += "_" + node_type;
+        std::cout << "output_name = " << output_name << std::endl;
+        node->output_.push_back(output_name);
+      }
+    } else if (fields[i]->name() == key) {
+        auto& weight_proto = r->GetMessage(node_def, fields[i]);
+        const google::protobuf::Descriptor *d = weight_proto.GetDescriptor();
+        const google::protobuf::Reflection *r = weight_proto.GetReflection();
+        std::vector<const google::protobuf::FieldDescriptor*> fields;
       r->ListFields(weight_proto, &fields);
       for (int j = 0; j < fields.size(); ++j) {
         if (fields[j]->name() == "name" || fields[j]->name() == "data" || fields[j]->name() == "label" || fields[j]->name() == "loss") {
-          // std::cout << "====== value " << r->GetString(weight_proto, fields[j]) << std::endl;
+          std::string name = r->GetString(weight_proto, fields[j]);
         } else if (fields[j]->name() == "row_num") {
           int32_t row_num = r->GetUInt32(weight_proto, fields[j]);
           node->w_row_num_ = row_num;
@@ -96,9 +100,6 @@ Node* UdfGraph::AddNode(const NodeDef node_def) {
       }
     }
   }
-  std::cout << std::endl;
-  
-  
 
   nodes_.insert({node});
   name_to_node_.insert({node_name, node});

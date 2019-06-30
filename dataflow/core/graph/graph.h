@@ -37,6 +37,7 @@ class Node {
   int32_t id_;
   std::vector<std::string> input_x_;
   std::vector<std::string> input_w_;
+  std::vector<std::string> output_;
   int32_t w_row_num_;
   int32_t w_col_num_;
   
