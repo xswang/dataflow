@@ -16,11 +16,15 @@
 
 namespace dataflow {
 CLASS_REGISTER_IMPLEMENT_REGISTRY(dataflow_op_registry, Operator);
-REGISTER_OP("Reader", Reader);
-REGISTER_OP("Innerproduct", Innerproduct);
+std::string OP_Reader = "Reader";
+REGISTER_OP(OP_Reader, Reader);
+std::string OP_Innerproduct = "Innerproduct";
+REGISTER_OP(OP_Innerproduct, Innerproduct);
 // REGISTER_OP("Conv", Conv);
 // REGISTER_OP("Pooling", Pooling);
 // REGISTER_OP("Lstm", Lstm);
-REGISTER_OP("Sigmoid", Sigmoid);
-REGISTER_OP("Logloss", Logloss);
+std::string OP_Sigmoid = "Sigmoid";
+REGISTER_OP(OP_Sigmoid, Sigmoid);
+std::string OP_Logloss = "Logloss";
+REGISTER_OP(OP_Logloss, Logloss);
 }

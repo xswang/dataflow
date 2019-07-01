@@ -28,7 +28,6 @@
                                                                              \
    ObjectCreatorRegistry_##register_name()                                   \
    : m_default_creator(nullptr) {}                                           \
-                                                                             \
    ~ObjectCreatorRegistry_##register_name() {}                               \
                                                                              \
    void SetDefaultCreator(Creator creator) {                                 \
@@ -75,7 +74,7 @@
 
 
 
-#define MATRIX_BLOB_REGISTER_IMPLEMENT_REGISTRY(register_name, base_class_name)  \
+#define CLASS_REGISTER_IMPLEMENT_REGISTRY(register_name, base_class_name)  \
 base_class_name* ObjectCreatorRegistry_##register_name::CreateMatrixBlobObject(  \
   std::string& entry_name) {                                               \
   Creator creator = m_default_creator;                                           \
@@ -115,7 +114,7 @@ base_class_name* ObjectCreatorRegistry_##register_name::CreateObject(      \
 
 
 
-// default register
+
 #define CLASS_REGISTER_DEFAULT_OBJECT_CREATOR(register_name,                 \
                                               base_class_name,               \
                                               class_name)                    \
@@ -127,26 +126,26 @@ base_class_name* ObjectCreatorRegistry_##register_name::CreateObject(      \
       DefaultObjectCreator_##register_name##class_name)
 
 
-// class register
+
 #define CLASS_REGISTER_OBJECT_CREATOR(register_name,                         \
                                       base_class_name,                       \
-                                      entry_name,                  \
+                                      entry_name_as_string,                  \
                                       class_name)                            \
-  base_class_name* ObjectCreator_##register_name##entry_name##class_name() {             \
+  base_class_name* ObjectCreator_##register_name##class_name() {             \
     return new class_name;                                                   \
   }                                                                          \
                                                                              \
   ObjectCreatorRegister_##register_name                                      \
-  g_object_creator_register_##register_name##entry_name##class_name(                     \
-      entry_name,                                                  \
-      ObjectCreator_##register_name##entry_name##class_name)
+  g_object_creator_register_##register_name##class_name(                     \
+      entry_name_as_string,                                                  \
+      ObjectCreator_##register_name##class_name)
 
 
 
-#define MATRIX_BLOB_REGISTER_CREATE_OBJECT(register_name, entry_name)    \
-  GetRegistry_##register_name().CreateMatrixBlobObject(entry_name)
+#define MATRIX_BLOB_REGISTER_CREATE_OBJECT(register_name, entry_name_as_string)    \
+  GetRegistry_##register_name().CreateMatrixBlobObject(entry_name_as_string)
 
-#define CLASS_REGISTER_CREATE_OBJECT(register_name, entry_name)    \
-  GetRegistry_##register_name().CreateObject(entry_name)
+#define CLASS_REGISTER_CREATE_OBJECT(register_name, entry_name_as_string)    \
+  GetRegistry_##register_name().CreateObject(entry_name_as_string)
 
 #endif  // DATAFLOW_BASE_OP_REGISTER_H_
