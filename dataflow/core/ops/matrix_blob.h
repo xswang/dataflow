@@ -32,7 +32,7 @@ class MatrixBlob {
   virtual bool& has_gradient() {
     return _has_gradient;
   }
- private:
+
   bool _need_gradient = false;
   bool _has_gradient = false;
   Eigen::MatrixXf _data, _gradient;

@@ -20,20 +20,11 @@ class Innerproduct : public Operator {
   std::string get_op_name() {return "Innerproduct";}
   void initialize(Node* node) {
     std::cout << node->name_ << std::endl;
-    size_t index = 0;
-    input_name_ = "";
     for (int i = 0; i < node->input_x_.size(); ++i) {
       input_name_ = node->input_x_[i];
-      index = input_name_.find("/", index);
-      input_name_.replace(index, 1, "_");
-      std::cout << "input: " << input_name_ << std::endl;
     }
-    index = 0;
     for (int i = 0; i < node->output_.size(); ++i) {
       output_name_ = node->output_[i];
-      index = output_name_.find("/", index);
-      output_name_.replace(index, 1, "_");
-      std::cout << "output: " << output_name_ << std::endl;
     }
     std::cout << "==================================" << std::endl;
   }
@@ -41,6 +32,7 @@ class Innerproduct : public Operator {
     if (input_name_ != "") {
       auto input_x =
         dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(input_name_));
+      std::cout << input_name_ << " _need_gradient = " << input_x->_need_gradient << std::endl;
     }
   }
 

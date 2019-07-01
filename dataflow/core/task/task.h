@@ -37,6 +37,9 @@ class Task {
       }
       // std::cout << std::endl;
       auto op = dynamic_cast<dataflow::Operator*>(dataflow::CREATE_OP(node));
+      if (op == nullptr) std::cout << "op null" << std::endl;
+      else std::cout << op->get_op_name() << std::endl;
+      op->forward();
       // auto matrix_blob =
       //   dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(input_name));
     }
