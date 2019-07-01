@@ -36,10 +36,9 @@ class Task {
         // matrix_blob_register.insert({input_name, matrix_blob});
       }
       // std::cout << std::endl;
-      // auto op = dynamic_cast<dataflow::Operator*>(dataflow::CREATE_OP(node));
-      auto matrix_blob =
-        dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(input_name));
-        // dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(input_name));
+      auto op = dynamic_cast<dataflow::Operator*>(dataflow::CREATE_OP(node));
+      // auto matrix_blob =
+      //   dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(input_name));
     }
   }
 

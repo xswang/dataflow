@@ -1,6 +1,7 @@
 node_def{
   name: "mnist"
   type: "Reader"
+  out: "mnist/data"
   Reader_proto {
     data: "data"
     label: "label"

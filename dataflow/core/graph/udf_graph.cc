@@ -69,7 +69,7 @@ Node* UdfGraph::AddNode(const NodeDef node_def) {
       int32_t fields_size = r->FieldSize(node_def, pMessageField);
       for (int32_t j = 0; j < fields_size; ++j) {
         auto input_name = r->GetRepeatedString(node_def, pMessageField, j);
-        // std::cout << "input_name = " << input_name << std::endl;
+        std::cout << "Node input_name = " << input_name << std::endl;
         node->input_x_.push_back(input_name);
       }
     } else if (fields[i]->name() == "out") {
@@ -78,7 +78,7 @@ Node* UdfGraph::AddNode(const NodeDef node_def) {
       for (int32_t j = 0; j < fields_size; ++j) {
         auto output_name = r->GetRepeatedString(node_def, pMessageField, j);
         output_name += "_" + node_type;
-        // std::cout << "output_name = " << output_name << std::endl;
+        std::cout << "Node output_name = " << output_name << std::endl;
         node->output_.push_back(output_name);
       }
     } else if (fields[i]->name() == key) {
