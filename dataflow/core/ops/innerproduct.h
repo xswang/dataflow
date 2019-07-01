@@ -25,10 +25,9 @@ class Innerproduct : public Operator {
       std::cout << "input_name = " << input_name_ << std::endl;
     }
   }
-
   void forward() {
-    auto input_x =
-      dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(input_name_));
+    // auto input_x =
+    //   dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(input_name_));
     // auto a = registry[input_name_];
   }
 

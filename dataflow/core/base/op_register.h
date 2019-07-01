@@ -33,13 +33,11 @@
    void SetDefaultCreator(Creator creator) {                                 \
      m_default_creator = creator;                                            \
    }                                                                         \
-                                                                             \
    void AddCreator(std::string entry_name, Creator creator) {                \
      m_creator_registry[entry_name] = creator;                               \
    }                                                                         \
-                                                                             \
-   base_class_name* CreateObject(dataflow::Node* node_name);             \
-   base_class_name* CreateMatrixBlobObject(const std::string& entry_name);             \
+   base_class_name* CreateObject(dataflow::Node* node_name);                 \
+   base_class_name* CreateMatrixBlobObject(std::string& entry_name);         \
                                                                              \
    private:                                                                  \
    typedef std::map<std::string, Creator> CreatorRegistry;                   \
@@ -73,42 +71,48 @@
    ~ObjectCreatorRegister_##register_name() {}                               \
   };
 
-  #define CLASS_REGISTER_IMPLEMENT_REGISTRY(register_name, base_class_name)  \
-  base_class_name* ObjectCreatorRegistry_##register_name::CreateObject(      \
-      dataflow::Node* node_name) {                                       \
-    Creator creator = m_default_creator;                                     \
-    std::string entry_name = node_name->type_; \
-    CreatorRegistry::const_iterator it =                                     \
-        m_creator_registry.find(entry_name);                                 \
-    if (it != m_creator_registry.end()) {                                    \
-      creator = it->second;                                                  \
-    }                                                                        \
-                                                                             \
-    if (creator != nullptr) {                                                \
-      base_class_name* instance = (*creator)(); \
-      instance->initialize(node_name); \
-      return instance;                                  \
-     } else {                                                                \
-      return nullptr;                                                        \
-    }                                                                        \
-  }
 
-  #define MATRIX_BLOB_REGISTER_IMPLEMENT_REGISTRY(register_name, base_class_name)  \
-  base_class_name* ObjectCreatorRegistry_##register_name::CreateMatrixBlobObject(      \
-    const std::string& entry_name) {                                       \
-    Creator creator = m_default_creator;                                     \
-    CreatorRegistry::const_iterator it =                                     \
-        m_creator_registry.find(entry_name);                                 \
-    if (it != m_creator_registry.end()) {                                    \
-      creator = it->second;                                                  \
-    }                                                                        \
-                                                                             \
-    if (creator != nullptr) {                                                \
-      return (*creator)();                                                   \
-     } else {                                                                \
-      return nullptr;                                                        \
-    }                                                                        \
-  }
+
+
+#define CLASS_REGISTER_IMPLEMENT_REGISTRY(register_name, base_class_name)  \
+base_class_name* ObjectCreatorRegistry_##register_name::CreateMatrixBlobObject(  \
+  std::string& entry_name) {                                               \
+  Creator creator = m_default_creator;                                           \
+  CreatorRegistry::const_iterator it =                                           \
+      m_creator_registry.find(entry_name);                                       \
+  if (it != m_creator_registry.end()) {                                    \
+    creator = it->second;                                                  \
+  }                                                                        \
+  if (creator != nullptr) {                                                \
+    return (*creator)();                                                   \
+  } else {                                                                \
+    return nullptr;                                                        \
+  }                                                                        \
+}
+
+
+
+
+#define CLASS_REGISTER_IMPLEMENT_REGISTRY(register_name, base_class_name)  \
+base_class_name* ObjectCreatorRegistry_##register_name::CreateObject(      \
+    dataflow::Node* node_name) {                                           \
+  Creator creator = m_default_creator;                                     \
+  std::string entry_name = node_name->type_;                               \
+  CreatorRegistry::const_iterator it =                                     \
+      m_creator_registry.find(entry_name);                                 \
+  if (it != m_creator_registry.end()) {                                    \
+    creator = it->second;                                                  \
+  }                                                                        \
+  if (creator != nullptr) {                                                \
+    base_class_name* instance = (*creator)();                              \
+    instance->initialize(node_name);                                       \
+    return instance;                                                       \
+  } else {                                                                \
+    return nullptr;                                                        \
+  }                                                                        \
+}
+
+
 
 
 #define CLASS_REGISTER_DEFAULT_OBJECT_CREATOR(register_name,                 \
@@ -121,6 +125,8 @@
   g_default_object_creator_register_##register_name##class_name(             \
       DefaultObjectCreator_##register_name##class_name)
 
+
+
 #define CLASS_REGISTER_OBJECT_CREATOR(register_name,                         \
                                       base_class_name,                       \
                                       entry_name_as_string,                  \
@@ -128,15 +134,18 @@
   base_class_name* ObjectCreator_##register_name##class_name() {             \
     return new class_name;                                                   \
   }                                                                          \
+                                                                             \
   ObjectCreatorRegister_##register_name                                      \
   g_object_creator_register_##register_name##class_name(                     \
       entry_name_as_string,                                                  \
       ObjectCreator_##register_name##class_name)
 
-#define CLASS_REGISTER_CREATE_OBJECT(register_name, entry_name_as_string)    \
-  GetRegistry_##register_name().CreateObject(entry_name_as_string)
+
 
 #define MATRIX_BLOB_REGISTER_CREATE_OBJECT(register_name, entry_name_as_string)    \
   GetRegistry_##register_name().CreateMatrixBlobObject(entry_name_as_string)
+
+#define CLASS_REGISTER_CREATE_OBJECT(register_name, entry_name_as_string)    \
+  GetRegistry_##register_name().CreateObject(entry_name_as_string)
 
 #endif  // DATAFLOW_BASE_OP_REGISTER_H_

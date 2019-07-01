@@ -10,11 +10,11 @@
 
 #include "core/base/op_register.h"
 #include "core/graph/graph.h"
-#include "core/ops/matrix_blob.h"
+// #include "core/ops/matrix_blob.h"
 
 namespace dataflow{
 
-class MatrixBlob;
+// class MatrixBlob;
 // static std::map<std::string, MatrixBlob*> matrix_blob_register;
 
 class Operator {
@@ -29,37 +29,21 @@ class Operator {
  private:
   Node* _node;
 };
-/*
-CLASS_REGISTER_DEFINE_REGISTRY(dataflow_matrixblob_registry, MatrixBlob)
-#define REGISTER_MATRIX_BLOB(format_name, op_name)             \
-            CLASS_REGISTER_OBJECT_CREATOR(                            \
-                                    dataflow_matrixblob_registry,                                \
-                                    MatrixBlob,                                                \
-                                    format_name,                                          \
-                                    op_name)
 
-#define CREATE_MATRIX_BLOB(format_name)                           \
-            MATRIX_BLOB_REGISTER_CREATE_OBJECT(                             \
-                                    dataflow_matrixblob_registry,                                \
-                                    format_name)
-*/
+CLASS_REGISTER_DEFINE_REGISTRY(dataflow_op_registry, Operator);
 
-
-CLASS_REGISTER_DEFINE_REGISTRY(dataflow_op_registry, Operator)
 #define REGISTER_OP(format_name, op_name)             \
-    CLASS_REGISTER_OBJECT_CREATOR(                            \
-        dataflow_op_registry,                                \
-        Operator,                                                \
-        format_name,                                          \
-        op_name)
+   CLASS_REGISTER_OBJECT_CREATOR(                            \
+     dataflow_op_registry,                                \
+     Operator,                                                \
+     format_name,                                          \
+     op_name)
 
 #define CREATE_OP(format_name)                           \
-    CLASS_REGISTER_CREATE_OBJECT(                             \
-        dataflow_op_registry,                                \
-        format_name)
+   CLASS_REGISTER_CREATE_OBJECT(                             \
+     dataflow_op_registry,                                \
+     format_name)
 
-CLASS_REGISTER_IMPLEMENT_REGISTRY(dataflow_op_registry, Operator);
-CLASS_REGISTER_IMPLEMENT_REGISTRY(dataflow_matrixblob_registry, MatrixBlob);
 }
 
 #endif /* !OPERATOR_H */

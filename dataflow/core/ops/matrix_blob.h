@@ -13,6 +13,7 @@
 #include "core/graph/graph.h"
 
 namespace dataflow {
+
 class MatrixBlob {
  public:
   MatrixBlob() {}
@@ -37,18 +38,19 @@ class MatrixBlob {
   Eigen::MatrixXf _data, _gradient;
 };
 
-CLASS_REGISTER_DEFINE_REGISTRY(dataflow_matrixblob_registry, MatrixBlob)
-#define REGISTER_MATRIX_BLOB(format_name, op_name)             \
-        CLASS_REGISTER_OBJECT_CREATOR(                            \
-                    dataflow_matrixblob_registry,                                \
-                    MatrixBlob,                                                \
-                    format_name,                                          \
-                    op_name)
+CLASS_REGISTER_DEFINE_REGISTRY(dataflow_matrixblob_registry, MatrixBlob);
 
-#define CREATE_MATRIX_BLOB(format_name)                           \
-        MATRIX_BLOB_REGISTER_CREATE_OBJECT(                             \
-                    dataflow_matrixblob_registry,                                \
-                    format_name)
+#define REGISTER_MATRIX_BLOB(format_name, op_name)             \
+   CLASS_REGISTER_OBJECT_CREATOR(                              \
+     dataflow_matrixblob_registry,                             \
+     MatrixBlob,                                               \
+     format_name,                                              \
+     op_name)
+
+#define CREATE_MATRIX_BLOB(format_name)                        \
+   MATRIX_BLOB_REGISTER_CREATE_OBJECT(                         \
+     dataflow_matrixblob_registry,                             \
+     format_name)
 
 }
 

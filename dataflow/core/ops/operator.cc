@@ -15,6 +15,7 @@
 #include "core/ops/logloss.h"
 
 namespace dataflow {
+CLASS_REGISTER_IMPLEMENT_REGISTRY(dataflow_op_registry, Operator);
 REGISTER_OP("Reader", Reader);
 REGISTER_OP("Innerproduct", Innerproduct);
 // REGISTER_OP("Conv", Conv);

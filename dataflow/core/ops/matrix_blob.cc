@@ -9,6 +9,8 @@
 
 
 namespace dataflow {
+CLASS_REGISTER_IMPLEMENT_REGISTRY(dataflow_matrixblob_registry, MatrixBlob);
+// MATRIX_BLOB_REGISTER_IMPLEMENT_REGISTRY(dataflow_matrixblob_registry, MatrixBlob);
 REGISTER_MATRIX_BLOB("mnist/data_Reader", MatrixBlob);
 REGISTER_MATRIX_BLOB("fc1/out_Innerproduct", MatrixBlob);
 REGISTER_MATRIX_BLOB("fc2/out_Innerproduct", MatrixBlob);
