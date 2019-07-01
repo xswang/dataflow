@@ -23,9 +23,11 @@ class Sigmoid : public Operator {
     std::cout << node->name_ << std::endl;
     for (int i = 0; i < node->input_x_.size(); ++i) {
       input_name_ = node->input_x_[i];
+      std::cout << "input: " << input_name_ << std::endl;
     }
     for (int i = 0; i < node->output_.size(); ++i) {
       output_name_ = node->output_[i];
+      std::cout << "output: " << output_name_ << std::endl;
     }
     std::cout << "==================================" << std::endl;
   }

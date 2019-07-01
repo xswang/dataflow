@@ -34,14 +34,16 @@ class Reader : public Operator {
 
   void forward() {
     if (input_name_ != "") {
-      auto input_x =
-        dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(input_name_));
+      auto input_x = dataflow::CREATE_MATRIX_BLOB(input_name_);
+        // dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(input_name_));
     }
-    std::cout << "Reader====" << std::endl;
-    auto output = dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(output_name_));
+    // auto output = dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(output_name_));
+    auto output = dataflow::CREATE_MATRIX_BLOB(output_name_);
+    std::cout << "use_count = " << output.use_count() << std::endl;
+
     if (output == nullptr) std::cout << "NULL" << std::endl;
     output->_need_gradient = true;
-    std::cout << output_name_ << " _need_gradient = " << output->_need_gradient << std::endl;
+    std::cout << "need_gradient = " << output->_need_gradient << std::endl;
   }
 
  private:

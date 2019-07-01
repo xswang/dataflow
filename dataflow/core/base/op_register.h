@@ -44,7 +44,7 @@
      m_creator_registry[entry_name] = creator;                               \
    }                                                                         \
    base_class_name* CreateObject(dataflow::Node* node_name);                 \
-   base_class_name* CreateMatrixBlobObject(std::string& entry_name);         \
+   std::shared_ptr<base_class_name> CreateMatrixBlobObject(std::string& entry_name);         \
                                                                              \
    private:                                                                  \
    typedef std::map<std::string, Creator> CreatorRegistry;                   \
@@ -52,7 +52,7 @@
    CreatorRegistry m_creator_registry;                                       \
   };                                                                         \
                                                                              \
-  static std::map<std::string, base_class_name*> register_name##obj_factory; \
+  static std::map<std::string, std::shared_ptr<base_class_name>> register_name##obj_factory; \
                                                                              \
   inline ObjectCreatorRegistry_##register_name&                              \
   GetRegistry_##register_name() {                                            \
@@ -84,7 +84,7 @@
 
 
 #define MATRIX_BLOB_REGISTER_IMPLEMENT_REGISTRY(register_name, base_class_name)  \
-base_class_name* ObjectCreatorRegistry_##register_name::CreateMatrixBlobObject(  \
+  std::shared_ptr<base_class_name> ObjectCreatorRegistry_##register_name::CreateMatrixBlobObject(  \
   std::string& entry_name) {                                                     \
   auto iter = register_name##obj_factory.find(entry_name);                       \
   if (iter != register_name##obj_factory.end()) return iter->second;             \
@@ -95,9 +95,10 @@ base_class_name* ObjectCreatorRegistry_##register_name::CreateMatrixBlobObject( 
     creator = it->second;                                                  \
   }                                                                        \
   if (creator != nullptr) {                                                \
-    base_class_name* instance = (*creator)();                              \
+    std::shared_ptr<base_class_name> instance;                             \
+    instance.reset((*creator)());                                         \
     register_name##obj_factory.insert({entry_name, instance});             \
-    return instance;                                                   \
+    return instance;                                                       \
   } else {                                                                 \
     return nullptr;                                                        \
   }                                                                        \
