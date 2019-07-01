@@ -36,6 +36,7 @@ class Innerproduct : public Operator {
       std::cout << "use_count = " << input_x.use_count() << std::endl;
         // dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(input_name_));
       std::cout << "need_gradient = " << input_x->_need_gradient << std::endl;
+      std::cout << input_x->_data << std::endl;
     }
   }
 

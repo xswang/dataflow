@@ -44,6 +44,11 @@ class Reader : public Operator {
     if (output == nullptr) std::cout << "NULL" << std::endl;
     output->_need_gradient = true;
     std::cout << "need_gradient = " << output->_need_gradient << std::endl;
+
+    Eigen::MatrixXf matA(2, 2);
+    Eigen::MatrixXf& out_val = output->_data;
+    out_val.resizeLike(matA);
+    out_val << 1, 2, 3, 4;
   }
 
  private:
