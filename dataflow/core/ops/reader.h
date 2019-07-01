@@ -37,6 +37,7 @@ class Reader : public Operator {
       auto input_x =
         dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(input_name_));
     }
+    std::cout << "Reader====" << std::endl;
     auto output = dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(output_name_));
     if (output == nullptr) std::cout << "NULL" << std::endl;
     output->_need_gradient = true;

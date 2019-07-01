@@ -19,7 +19,13 @@
 
 #include <map>
 #include <string>
+#include <memory>
 #include "core/graph/graph.h"
+
+// auto iter = register_name##obj_factory.find(entry_name);                       \
+//   if (iter != register_name##obj_factory.end()) return iter->second;             \
+//     std::cout << "CreateMatrixBlobObject = " << entry_name << std::endl;           
+//    register_name##obj_factory.insert({entry_name, instance});             \
 
 #define CLASS_REGISTER_DEFINE_REGISTRY(register_name, base_class_name)       \
   class ObjectCreatorRegistry_##register_name {                              \
@@ -45,6 +51,8 @@
    Creator m_default_creator;                                                \
    CreatorRegistry m_creator_registry;                                       \
   };                                                                         \
+                                                                             \
+  static std::map<std::string, base_class_name*> register_name##obj_factory; \
                                                                              \
   inline ObjectCreatorRegistry_##register_name&                              \
   GetRegistry_##register_name() {                                            \
@@ -77,16 +85,20 @@
 
 #define MATRIX_BLOB_REGISTER_IMPLEMENT_REGISTRY(register_name, base_class_name)  \
 base_class_name* ObjectCreatorRegistry_##register_name::CreateMatrixBlobObject(  \
-  std::string& entry_name) {                                               \
+  std::string& entry_name) {                                                     \
+  auto iter = register_name##obj_factory.find(entry_name);                       \
+  if (iter != register_name##obj_factory.end()) return iter->second;             \
+                                                                                 \
   Creator creator = m_default_creator;                                           \
-  CreatorRegistry::const_iterator it =                                           \
-      m_creator_registry.find(entry_name);                                       \
+  CreatorRegistry::const_iterator it = m_creator_registry.find(entry_name);      \
   if (it != m_creator_registry.end()) {                                    \
     creator = it->second;                                                  \
   }                                                                        \
   if (creator != nullptr) {                                                \
-    return (*creator)();                                                   \
-  } else {                                                                \
+    base_class_name* instance = (*creator)();                              \
+    register_name##obj_factory.insert({entry_name, instance});             \
+    return instance;                                                   \
+  } else {                                                                 \
     return nullptr;                                                        \
   }                                                                        \
 }
