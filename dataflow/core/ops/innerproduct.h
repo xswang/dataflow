@@ -34,14 +34,13 @@ class Innerproduct : public Operator {
     if (input_name_ != "") {
       auto input_x = dataflow::CREATE_MATRIX_BLOB(input_name_);
       std::cout << "use_count = " << input_x.use_count() << std::endl;
-        // dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(input_name_));
-      std::cout << "need_gradient = " << input_x->_need_gradient << std::endl;
-      std::cout << input_x->_data << std::endl;
+      std::cout << "need_bp_gradient = " << input_x->need_bp_gradient_ << std::endl;
+      std::cout << input_x->value() << std::endl;
     }
   }
 
  private:
-  Node* _node;
+  Node* node_;
   std::string input_name_;
   std::string output_name_;
 };

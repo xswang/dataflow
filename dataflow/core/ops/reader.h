@@ -35,24 +35,23 @@ class Reader : public Operator {
   void forward() {
     if (input_name_ != "") {
       auto input_x = dataflow::CREATE_MATRIX_BLOB(input_name_);
-        // dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(input_name_));
     }
-    // auto output = dynamic_cast<dataflow::MatrixBlob*>(dataflow::CREATE_MATRIX_BLOB(output_name_));
     auto output = dataflow::CREATE_MATRIX_BLOB(output_name_);
+
     std::cout << "use_count = " << output.use_count() << std::endl;
 
     if (output == nullptr) std::cout << "NULL" << std::endl;
-    output->_need_gradient = true;
-    std::cout << "need_gradient = " << output->_need_gradient << std::endl;
+    output->need_bp_gradient_ = true;
+    std::cout << "need_bp_gradient = " << output->need_bp_gradient_ << std::endl;
 
     Eigen::MatrixXf matA(2, 2);
-    Eigen::MatrixXf& out_val = output->_data;
+    Eigen::MatrixXf& out_val = output->value();
     out_val.resizeLike(matA);
     out_val << 1, 2, 3, 4;
   }
 
  private:
-  Node* _node;
+  Node* node_;
   std::string input_name_;
   std::string output_name_;
 };

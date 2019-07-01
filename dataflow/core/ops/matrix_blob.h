@@ -19,23 +19,23 @@ class MatrixBlob {
   MatrixBlob() {}
   virtual ~MatrixBlob() = default;
 
-  void initialize(Node* node) {}
-  virtual Eigen::MatrixXf& data() {
-    return _data;
+  // void initialize(Node* node) {}
+  virtual Eigen::MatrixXf& value() {
+    return value_;
   }
   virtual Eigen::MatrixXf& gradient() {
-    return _gradient;
+    return gradient_;
   }
-  virtual bool& need_gradient() {
-    return _need_gradient;
+  virtual bool& need_bp_gradient() {
+    return need_bp_gradient_;
   }
-  virtual bool& has_gradient() {
-    return _has_gradient;
+  virtual bool& has_bp_gradient() {
+    return has_bp_gradient_;
   }
 
-  bool _need_gradient = false;
-  bool _has_gradient = false;
-  Eigen::MatrixXf _data, _gradient;
+  bool need_bp_gradient_ = false;
+  bool has_bp_gradient_ = false;
+  Eigen::MatrixXf value_, gradient_;
 };
 
 CLASS_REGISTER_DEFINE_REGISTRY(dataflow_matrixblob_registry, MatrixBlob);
@@ -53,6 +53,5 @@ CLASS_REGISTER_DEFINE_REGISTRY(dataflow_matrixblob_registry, MatrixBlob);
      format_name)
 
 }
-
 
 #endif /* !MATRIX_BLOB_H */
