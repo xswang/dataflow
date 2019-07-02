@@ -10,13 +10,8 @@
 
 #include "core/base/op_register.h"
 #include "core/graph/graph.h"
-// #include "core/ops/matrix_blob.h"
 
 namespace dataflow{
-
-// class MatrixBlob;
-// static std::map<std::string, MatrixBlob*> matrix_blob_register;
-
 class Operator {
  public:
   Operator() {}

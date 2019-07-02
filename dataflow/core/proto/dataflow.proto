@@ -12,7 +12,7 @@ message NodeDef{
   repeated string out = 4;
   oneof opDef {
     ReaderWProto Reader_proto = 5;
-    InnerproductWProto Innerproduct_proto = 9;
+    FullyConnectedWProto FullyConnected_proto = 9;
     SigmoidWProto Sigmoid_proto = 11;
     LogLossWProto Logloss_proto = 12;
   }
@@ -23,7 +23,7 @@ message ReaderWProto {
   string label = 3;
 }
 
-message InnerproductWProto {
+message FullyConnectedWProto {
   string name = 1;
   uint32 row_num = 2;
   uint32 col_num = 3;
