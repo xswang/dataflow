@@ -22,6 +22,7 @@ include_directories(
   "${PROJECT_BINARY_DIR}/"
   "${PROJECT_BINARY_DIR}/dataflow"
   "${PROJECT_BINARY_DIR}/third_party"
+  "${PROJECT_SOURCE_DIR}/ps-lite/include"
 )
 
 link_directories(
@@ -29,12 +30,14 @@ link_directories(
   "${PROJECT_BINARY_DIR}/dataflow/core/ops"
   "${PROJECT_BINARY_DIR}/dataflow/core/graph"
   "${PROJECT_BINARY_DIR}/dataflow/core/proto"
+  "${PROJECT_BINARY_DIR}/ps-lite"
 )
 
 add_subdirectory(dataflow/core/base)
 add_subdirectory(dataflow/core/ops)
 add_subdirectory(dataflow/core/graph)
 add_subdirectory(dataflow/core/proto)
+add_subdirectory(ps-lite)
 
 set(STA_DEPS graph base ops dataflow_proto pthread ${dataflow_third_party_libs})
 add_executable(df ${dataflow_src_dir}/core/main.cc)

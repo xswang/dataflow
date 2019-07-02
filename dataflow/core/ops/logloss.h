@@ -31,6 +31,14 @@ class Logloss : public Operator {
     std::cout << "==================================" << std::endl;
   }
 
+  void forward() override {
+    
+  }
+
+  void  backward() override {
+    
+  }
+
  private:
   Node* _node;
   std::string input_name_;
