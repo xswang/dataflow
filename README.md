@@ -1,3 +1,3 @@
 Distributed DL system
 
-git clone --recursive git@github.com:xswang/dataflow.git
+git clone --recursive https://github.com/xswang/pdl.git
