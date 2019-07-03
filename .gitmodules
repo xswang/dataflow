@@ -1,3 +1,9 @@
 [submodule "ps-lite"]
 	path = ps-lite
 	url = git@github.com:xswang/ps-lite.git
+[submodule "ps-lite"]
+	path = byte-ps-lite
+	url = git@github.com:bytedance/ps-lite.git
+[submodule "byte-ps-lite"]
+	path = byte-ps-lite
+	url = git@github.com:bytedance/ps-lite.git
