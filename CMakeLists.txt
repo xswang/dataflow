@@ -42,6 +42,6 @@ add_subdirectory(dataflow/core/proto)
 # add_subdirectory(ps-lite)
 add_subdirectory(ps-lite-byteps)
 
-set(STA_DEPS pslite-byteps graph base ops dataflow_proto pthread ${dataflow_third_party_libs})
+set(STA_DEPS pslite graph base ops dataflow_proto pthread ${dataflow_third_party_libs})
 add_executable(df ${dataflow_src_dir}/core/main.cc)
 target_link_libraries(df ${STA_DEPS})
